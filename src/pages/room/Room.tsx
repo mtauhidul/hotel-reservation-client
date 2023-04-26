@@ -69,7 +69,7 @@ const Room = () => {
   const base_url =
     import.meta.env.VITE_NODE_ENV === 'development'
       ? 'http://localhost:4000'
-      : 'https://hotel-reservation-server.herokuapp.com';
+      : import.meta.env.VITE_BASE_URL;
 
   const handleCheckout = async (room: any) => {
     try {
