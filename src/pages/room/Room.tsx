@@ -1,9 +1,9 @@
-import BathtubIcon from "@mui/icons-material/Bathtub";
-import BedIcon from "@mui/icons-material/Bed";
-import DescriptionIcon from "@mui/icons-material/Description";
-import FreeBreakfastIcon from "@mui/icons-material/FreeBreakfast";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import BathtubIcon from '@mui/icons-material/Bathtub';
+import BedIcon from '@mui/icons-material/Bed';
+import DescriptionIcon from '@mui/icons-material/Description';
+import FreeBreakfastIcon from '@mui/icons-material/FreeBreakfast';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {
   Box,
   Button,
@@ -16,20 +16,20 @@ import {
   MenuItem,
   Stack,
   Typography,
-} from "@mui/material";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { loadStripe } from "@stripe/stripe-js";
-import dayjs, { Dayjs } from "dayjs";
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import useSWR from "swr";
-import Layout from "../../layout";
-import { getRoom } from "../../services";
-import styles from "./Room.module.scss";
+} from '@mui/material';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { loadStripe } from '@stripe/stripe-js';
+import dayjs, { Dayjs } from 'dayjs';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import useSWR from 'swr';
+import Layout from '../../layout';
+import { getRoom } from '../../services';
+import styles from './Room.module.scss';
 
 interface Room {
   titleEN: string;
@@ -64,12 +64,12 @@ const Room = () => {
     return room;
   };
 
-  const { data: room, error, isLoading } = useSWR("room", getRoomData);
+  const { data: room, error, isLoading } = useSWR('room', getRoomData);
 
   const base_url =
-    import.meta.env.VITE_NODE_ENV === "development"
-      ? "http://localhost:4000"
-      : "https://hotel-reservation-system-three.vercel.app/";
+    import.meta.env.VITE_NODE_ENV === 'development'
+      ? 'http://localhost:4000'
+      : 'https://hotel-reservation-system-cvw8-bimx64q21-mtauhidul.vercel.app';
 
   const handleCheckout = async (room: any) => {
     try {
@@ -78,15 +78,15 @@ const Room = () => {
 
       const data = {
         ...room,
-        checkIn: startDate?.format("YYYY-MM-DD"),
-        checkOut: endDate?.format("YYYY-MM-DD"),
+        checkIn: startDate?.format('YYYY-MM-DD'),
+        checkOut: endDate?.format('YYYY-MM-DD'),
         guests: quantity,
       };
 
       const res = await fetch(`${base_url}/create-checkout-session/`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
       });
@@ -105,7 +105,7 @@ const Room = () => {
 
       setLoading(false);
     } catch (error) {
-      console.log("🚀 ~ file: Room.tsx:129 ~ handleCheckout ~ error:", error);
+      console.log('🚀 ~ file: Room.tsx:129 ~ handleCheckout ~ error:', error);
       setLoading(false);
     }
   };
@@ -120,20 +120,20 @@ const Room = () => {
   const [endDate, setEndDate] = useState<Dayjs | null>(dayjs());
   const [loading, setLoading] = useState<boolean>(false);
   // quantity
-  const [quantity, setQuantity] = useState<string>("1");
+  const [quantity, setQuantity] = useState<string>('1');
   // total
   const [total, setTotal] = useState<number>(Number(room?.priceEN));
 
   // set startDate and endDate from url search params
-  const checkInDate = searchParams.get("checkIn");
-  const checkOutDate = searchParams.get("checkOut");
-  const guests = searchParams.get("guests");
+  const checkInDate = searchParams.get('checkIn');
+  const checkOutDate = searchParams.get('checkOut');
+  const guests = searchParams.get('guests');
 
   useEffect(() => {
     if (checkInDate && checkOutDate) {
       setStartDate(dayjs(checkInDate));
       setEndDate(dayjs(checkOutDate));
-      setQuantity(guests || "1");
+      setQuantity(guests || '1');
     }
   }, []);
 
@@ -161,25 +161,24 @@ const Room = () => {
   };
 
   const description =
-    language === "en" ? room?.descriptionEN : room?.descriptionFR;
+    language === 'en' ? room?.descriptionEN : room?.descriptionFR;
 
-  const title = language === "en" ? room?.titleEN : room?.titleFR;
+  const title = language === 'en' ? room?.titleEN : room?.titleFR;
 
   return (
     <Layout>
       <div className={styles._wrapper}>
         <Container>
-          <Typography variant="h6" color="inherit" className={styles._title}>
+          <Typography variant='h6' color='inherit' className={styles._title}>
             {title}
           </Typography>
 
           <Stack
-            direction={{ sm: "row", xs: "column" }}
+            direction={{ sm: 'row', xs: 'column' }}
             spacing={2}
-            className={styles._layout}
-          >
-            <Stack direction="column" spacing={2}>
-              <Stack direction="row" spacing={2}>
+            className={styles._layout}>
+            <Stack direction='column' spacing={2}>
+              <Stack direction='row' spacing={2}>
                 <div>
                   <img
                     src={room?.imagesEN[0]}
@@ -205,7 +204,7 @@ const Room = () => {
                 </div>
               </Box>
             </Stack>
-            <Stack direction="column" spacing={2}>
+            <Stack direction='column' spacing={2}>
               <Box>
                 <div>
                   <img
@@ -215,7 +214,7 @@ const Room = () => {
                   />
                 </div>
               </Box>
-              <Stack direction="row" spacing={2}>
+              <Stack direction='row' spacing={2}>
                 <div>
                   <img
                     src={room?.imagesEN[0]}
@@ -238,69 +237,63 @@ const Room = () => {
             <Card className={styles._card}>
               <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginBottom: "20px",
-                }}
-              >
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginBottom: '20px',
+                }}>
                 <DescriptionIcon
-                  sx={{ color: "#dfbf7b", margin: "0 auto", fontSize: "60px" }}
+                  sx={{ color: '#dfbf7b', margin: '0 auto', fontSize: '60px' }}
                 />
               </Box>
               <Typography
-                variant="h6"
-                color="inherit"
-                className={styles._title}
-              >
-                {t("room_description")}
+                variant='h6'
+                color='inherit'
+                className={styles._title}>
+                {t('room_description')}
               </Typography>
               <Typography
-                variant="body1"
-                color="inherit"
+                variant='body1'
+                color='inherit'
                 sx={{
-                  textAlign: "justify !important",
+                  textAlign: 'justify !important',
                 }}
-                className={styles._body}
-              >
+                className={styles._body}>
                 {show ? description : description?.slice(0, 590)}
               </Typography>
 
               <Stack
                 onClick={() => setShow(!show)}
-                direction={"column"}
+                direction={'column'}
                 spacing={2}
-                sx={{ marginTop: "20px", cursor: "pointer" }}
-              >
+                sx={{ marginTop: '20px', cursor: 'pointer' }}>
                 <Typography
-                  variant="h6"
-                  color="inherit"
-                  className={styles._body}
-                >
-                  {show ? t("showLess") : t("showMore")}
+                  variant='h6'
+                  color='inherit'
+                  className={styles._body}>
+                  {show ? t('showLess') : t('showMore')}
                 </Typography>
 
                 <Box
                   sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    marginBottom: "20px",
-                    marginTop: "0px !important",
-                  }}
-                >
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginBottom: '20px',
+                    marginTop: '0px !important',
+                  }}>
                   {show ? (
                     <KeyboardArrowUpIcon
                       sx={{
-                        color: "#dfbf7b",
-                        margin: "0 auto",
-                        fontSize: "60px",
+                        color: '#dfbf7b',
+                        margin: '0 auto',
+                        fontSize: '60px',
                       }}
                     />
                   ) : (
                     <KeyboardArrowDownIcon
                       sx={{
-                        color: "#dfbf7b",
-                        margin: "0 auto",
-                        fontSize: "60px",
+                        color: '#dfbf7b',
+                        margin: '0 auto',
+                        fontSize: '60px',
                       }}
                     />
                   )}
@@ -315,33 +308,31 @@ const Room = () => {
                 <Card className={styles._card}>
                   <Box
                     sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      marginBottom: "20px",
-                    }}
-                  >
-                    <Stack direction="row" spacing={1} alignItems={"center"}>
+                      display: 'flex',
+                      justifyContent: 'center',
+                      marginBottom: '20px',
+                    }}>
+                    <Stack direction='row' spacing={1} alignItems={'center'}>
                       <FreeBreakfastIcon />
-                      <Typography variant="h6" color="inherit">
-                        {t("breakfast")}
+                      <Typography variant='h6' color='inherit'>
+                        {t('breakfast')}
                       </Typography>
                     </Stack>
                   </Box>
 
                   <Stack
-                    direction="row"
-                    alignItems={"center"}
-                    justifyContent={"space-between"}
-                  >
-                    <Stack direction="row" spacing={1} alignItems={"center"}>
+                    direction='row'
+                    alignItems={'center'}
+                    justifyContent={'space-between'}>
+                    <Stack direction='row' spacing={1} alignItems={'center'}>
                       <BedIcon />
-                      <Typography variant="h6" color="inherit">
-                        {room?.capacityEN} {t("beds")}
+                      <Typography variant='h6' color='inherit'>
+                        {room?.capacityEN} {t('beds')}
                       </Typography>
                     </Stack>
-                    <Stack direction="row" spacing={1} alignItems={"center"}>
+                    <Stack direction='row' spacing={1} alignItems={'center'}>
                       <BathtubIcon />
-                      <Typography variant="h6" color="inherit">
+                      <Typography variant='h6' color='inherit'>
                         {room?.typeEN}
                       </Typography>
                     </Stack>
@@ -351,45 +342,43 @@ const Room = () => {
                 <br />
                 <br />
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2626.881967092916!2d0.704333177034073!3d48.82231347132734!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e179d91c81c419%3A0x3d94cc8691023466!2sLe%20Clos%20Saint-Germain!5e0!3m2!1sen!2sbd!4v1682193076948!5m2!1sen!2sbd"
-                  width="100%"
-                  height="300px"
+                  src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2626.881967092916!2d0.704333177034073!3d48.82231347132734!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e179d91c81c419%3A0x3d94cc8691023466!2sLe%20Clos%20Saint-Germain!5e0!3m2!1sen!2sbd!4v1682193076948!5m2!1sen!2sbd'
+                  width='100%'
+                  height='300px'
                   //   allowfullscreen=""
-                  loading="lazy"
-                  style={{ borderRadius: "48px" }}
+                  loading='lazy'
+                  style={{ borderRadius: '48px' }}
                   //   referrerpolicy="no-referrer-when-downgrade"
                 ></iframe>
               </Grid>
             )}
             <Grid item md={6} sm={12} xs={12}>
               <Card className={styles._card}>
-                <Typography variant="h6" color="inherit">
-                  {room?.priceEN}€{" "}
+                <Typography variant='h6' color='inherit'>
+                  {room?.priceEN}€{' '}
                   <span
                     style={{
-                      fontSize: "16px",
-                      fontWeight: "400",
-                    }}
-                  >
-                    {t("perUnit")}
+                      fontSize: '16px',
+                      fontWeight: '400',
+                    }}>
+                    {t('perUnit')}
                   </span>
                 </Typography>
 
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <Stack
-                    direction="row"
+                    direction='row'
                     spacing={1}
-                    alignItems={"center"}
-                    sx={{ marginTop: "20px" }}
-                  >
+                    alignItems={'center'}
+                    sx={{ marginTop: '20px' }}>
                     <DatePicker
-                      label="Start Date"
+                      label='Start Date'
                       value={startDate}
                       onChange={(newValue) => setStartDate(newValue)}
                       disablePast={true}
                     />
                     <DatePicker
-                      label="End Date"
+                      label='End Date'
                       value={endDate}
                       onChange={(newValue) => setEndDate(newValue)}
                       disablePast={true}
@@ -397,109 +386,99 @@ const Room = () => {
                   </Stack>
                 </LocalizationProvider>
 
-                <FormControl fullWidth sx={{ marginTop: "20px" }}>
-                  <InputLabel id="demo-simple-select-label">
-                    {t("quantity")}
+                <FormControl fullWidth sx={{ marginTop: '20px' }}>
+                  <InputLabel id='demo-simple-select-label'>
+                    {t('quantity')}
                   </InputLabel>
                   <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
+                    labelId='demo-simple-select-label'
+                    id='demo-simple-select'
                     value={quantity}
-                    label={t("quantity")}
-                    onChange={handleQuantityChange}
-                  >
-                    <MenuItem value={"1"}>1</MenuItem>
-                    <MenuItem value={"2"}>2</MenuItem>
-                    <MenuItem value={"3"}>3</MenuItem>
-                    <MenuItem value={"4"}>4</MenuItem>
-                    <MenuItem value={"5"}>5</MenuItem>
-                    <MenuItem value={"6"}>6</MenuItem>
-                    <MenuItem value={"7"}>7</MenuItem>
-                    <MenuItem value={"8"}>8</MenuItem>
-                    <MenuItem value={"9"}>9</MenuItem>
-                    <MenuItem value={"10"}>10</MenuItem>
+                    label={t('quantity')}
+                    onChange={handleQuantityChange}>
+                    <MenuItem value={'1'}>1</MenuItem>
+                    <MenuItem value={'2'}>2</MenuItem>
+                    <MenuItem value={'3'}>3</MenuItem>
+                    <MenuItem value={'4'}>4</MenuItem>
+                    <MenuItem value={'5'}>5</MenuItem>
+                    <MenuItem value={'6'}>6</MenuItem>
+                    <MenuItem value={'7'}>7</MenuItem>
+                    <MenuItem value={'8'}>8</MenuItem>
+                    <MenuItem value={'9'}>9</MenuItem>
+                    <MenuItem value={'10'}>10</MenuItem>
                   </Select>
                 </FormControl>
 
                 <Button
                   onClick={() => handleCheckout(room)}
-                  variant="contained"
-                  color="inherit"
-                  className={styles._button}
-                >
-                  {loading ? <CircularProgress /> : t("bookNow")}
+                  variant='contained'
+                  color='inherit'
+                  className={styles._button}>
+                  {loading ? <CircularProgress /> : t('bookNow')}
                 </Button>
 
                 <Typography
-                  variant="h6"
-                  color="inherit"
-                  className={styles._subtitle}
-                >
-                  {t("condition")}
+                  variant='h6'
+                  color='inherit'
+                  className={styles._subtitle}>
+                  {t('condition')}
                 </Typography>
 
                 <Stack
-                  direction="row"
-                  justifyContent={"space-between"}
-                  alignItems={"center"}
-                >
+                  direction='row'
+                  justifyContent={'space-between'}
+                  alignItems={'center'}>
                   <Typography
                     sx={{
-                      textDecoration: "underline",
+                      textDecoration: 'underline',
                     }}
-                    variant="body1"
-                    color="inherit"
-                    className={styles._subtitle}
-                  >
-                    {room?.priceEN} € * {quantity} {t("unit")}
+                    variant='body1'
+                    color='inherit'
+                    className={styles._subtitle}>
+                    {room?.priceEN} € * {quantity} {t('unit')}
                   </Typography>
 
                   <Typography
-                    variant="body1"
-                    color="inherit"
-                    className={styles._subtitle}
-                  >
+                    variant='body1'
+                    color='inherit'
+                    className={styles._subtitle}>
                     {total} €
                   </Typography>
                 </Stack>
 
                 {room?.breakfastEN && (
                   <Typography
-                    variant="h6"
-                    color="inherit"
+                    variant='h6'
+                    color='inherit'
                     sx={{
-                      textAlign: "left",
-                      fontSize: "18px",
-                      marginTop: "10px",
-                      textDecoration: "underline",
+                      textAlign: 'left',
+                      fontSize: '18px',
+                      marginTop: '10px',
+                      textDecoration: 'underline',
                       // color: "red",
-                    }}
-                  >
-                    {t("extra")}
+                    }}>
+                    {t('extra')}
                   </Typography>
                 )}
 
                 <div className={styles._divider}></div>
 
                 <Stack
-                  direction="row"
-                  justifyContent={"space-between"}
-                  alignItems={"center"}
-                >
+                  direction='row'
+                  justifyContent={'space-between'}
+                  alignItems={'center'}>
                   <Typography
-                    variant="body1"
-                    color="inherit"
+                    variant='body1'
+                    color='inherit'
                     className={styles._subtitle}
-                    style={{ fontWeight: "bold" }}
-                  >
-                    {t("total")}
+                    style={{ fontWeight: 'bold' }}>
+                    {t('total')}
                   </Typography>
 
                   <Typography
-                    variant="body1"
-                    color="inherit"
-                    className={styles._subtitle}
-                  >
+                    variant='body1'
+                    color='inherit'
+                    className={styles._subtitle}>
                     {total} €
                   </Typography>
                 </Stack>
