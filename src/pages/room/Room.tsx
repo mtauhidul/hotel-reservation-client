@@ -69,7 +69,7 @@ const Room = () => {
   const base_url =
     import.meta.env.VITE_NODE_ENV === 'development'
       ? 'http://localhost:4000'
-      : 'https://hotel-reservation-system-cvw8-bimx64q21-mtauhidul.vercel.app';
+      : 'https://hotel-reservation-server.herokuapp.com';
 
   const handleCheckout = async (room: any) => {
     try {
