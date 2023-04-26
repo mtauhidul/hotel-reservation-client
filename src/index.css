@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-color: #e0c07c;
+  --text-color: #000;
+
+  --error: rgb(239 68 68);
+  --label: rgb(192 192 192);
+}
+
+html,
+body,
+* {
+  @apply font-montserrat text-body;
+  scroll-behavior: smooth;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--label) transparent;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--label);
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--brand-color);
+  border-radius: 5px;
+}
+
+/* Headings */
+h1 {
+  @apply text-h1;
+}
+
+h2 {
+  @apply text-h2;
+}
+
+h3 {
+  @apply text-h3;
+}
+
+h4 {
+  @apply text-h4;
+}
+
+h5 {
+  @apply text-h5;
+}
+
+h6 {
+  @apply text-h6;
+}
