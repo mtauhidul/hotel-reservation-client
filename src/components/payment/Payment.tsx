@@ -21,7 +21,7 @@ const ProductDisplay = ({ room }: any) => (
       </div>
     </div>
     <form
-      action={`http://localhost:4000/create-checkout-session?id=${room?.priceId}`}
+      action={`https://hotel-reservation-server.herokuapp.com/create-checkout-session?id=${room?.priceId}`}
       method='POST'>
       <Button
         size='large'
