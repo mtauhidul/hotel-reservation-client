@@ -121,6 +121,8 @@ const Room = () => {
   const [loading, setLoading] = useState<boolean>(false);
   // quantity
   const [quantity, setQuantity] = useState<string>('1');
+
+  console.log(quantity);
   // total
   const [total, setTotal] = useState<number>(Number(room?.priceEN));
 
@@ -133,7 +135,7 @@ const Room = () => {
     if (checkInDate && checkOutDate) {
       setStartDate(dayjs(checkInDate));
       setEndDate(dayjs(checkOutDate));
-      setQuantity(guests || '1');
+      // setQuantity(guests || '1');
     }
   }, []);
 
@@ -388,13 +390,13 @@ const Room = () => {
 
                 <FormControl fullWidth sx={{ marginTop: '20px' }}>
                   <InputLabel id='demo-simple-select-label'>
-                    {t('quantity')}
+                    {t('guests')}
                   </InputLabel>
                   <Select
                     labelId='demo-simple-select-label'
                     id='demo-simple-select'
                     value={quantity}
-                    label={t('quantity')}
+                    label={t('guests')}
                     onChange={handleQuantityChange}>
                     <MenuItem value={'1'}>1</MenuItem>
                     <MenuItem value={'2'}>2</MenuItem>
@@ -402,10 +404,6 @@ const Room = () => {
                     <MenuItem value={'4'}>4</MenuItem>
                     <MenuItem value={'5'}>5</MenuItem>
                     <MenuItem value={'6'}>6</MenuItem>
-                    <MenuItem value={'7'}>7</MenuItem>
-                    <MenuItem value={'8'}>8</MenuItem>
-                    <MenuItem value={'9'}>9</MenuItem>
-                    <MenuItem value={'10'}>10</MenuItem>
                   </Select>
                 </FormControl>
 

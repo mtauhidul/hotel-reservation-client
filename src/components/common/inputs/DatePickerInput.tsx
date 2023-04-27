@@ -1,13 +1,13 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
 
-import { Controller } from "react-hook-form";
+import { Controller } from 'react-hook-form';
 
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 
 interface DatePickerInputProps {
   name: string;
@@ -25,8 +25,8 @@ interface DatePickerInputProps {
 }
 
 const DatePickerInput: React.FC<DatePickerInputProps> = ({
-  label = "",
-  name = "",
+  label = '',
+  name = '',
   optional = false,
   onChange,
   register,
@@ -40,27 +40,25 @@ const DatePickerInput: React.FC<DatePickerInputProps> = ({
     <Box>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Typography
-          align="left"
-          variant="subtitle1"
+          align='left'
+          variant='subtitle1'
           gutterBottom
-          component="label"
+          component='label'
           htmlFor={name}
           sx={{
-            fontWeight: "400",
-            fontSize: "14px",
-            lineHeight: "22px",
-            color: errors[name] ? "var(--error)" : "var(--brand-color)",
-          }}
-        >
+            fontWeight: '400',
+            fontSize: '14px',
+            lineHeight: '22px',
+            color: errors[name] ? 'var(--error)' : 'var(--brand-color)',
+          }}>
           {errors[name]?.message ? errors[name]?.message : label}
         </Typography>
 
         <Box
           sx={{
             mt: 0.5,
-            display: { xs: "none", lg: "block" },
-          }}
-        >
+            display: { xs: 'none', lg: 'block' },
+          }}>
           <Controller
             name={name}
             control={control}
@@ -73,9 +71,9 @@ const DatePickerInput: React.FC<DatePickerInputProps> = ({
             render={({ field: { ref, ...fieldRest } }) => (
               <DesktopDatePicker
                 sx={{
-                  width: "100%",
+                  width: '100%',
                 }}
-                disablePast={disablePast}
+                disablePast={true}
                 error={errors[name] ? true : false}
                 {...fieldRest}
                 {...rest}
@@ -87,9 +85,8 @@ const DatePickerInput: React.FC<DatePickerInputProps> = ({
         <Box
           sx={{
             mt: 1,
-            display: { xs: "block", lg: "none" },
-          }}
-        >
+            display: { xs: 'block', lg: 'none' },
+          }}>
           <Controller
             name={name}
             control={control}
@@ -102,7 +99,7 @@ const DatePickerInput: React.FC<DatePickerInputProps> = ({
             render={({ field: { ref, ...fieldRest } }) => (
               <MobileDatePicker
                 sx={{
-                  width: "100%",
+                  width: '100%',
                 }}
                 error={errors[name] ? true : false}
                 {...fieldRest}
