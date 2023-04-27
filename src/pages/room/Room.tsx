@@ -23,14 +23,13 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { loadStripe } from '@stripe/stripe-js';
 import dayjs, { Dayjs } from 'dayjs';
-import emailjs from 'emailjs-com';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import useSWR from 'swr';
 import Layout from '../../layout';
-import { getBooking, getRoom } from '../../services';
+import { getRoom } from '../../services';
 import styles from './Room.module.scss';
 
 interface Room {
@@ -104,31 +103,6 @@ const Room = () => {
       } else {
         toast.success('Reservation successful');
         sessionStorage.clear();
-
-        const booking = await getBooking(checkoutSession.id);
-
-        if (booking?.name) {
-          emailjs
-            .send(
-              import.meta.env.VITE_PUBLIC_EMAILJS_SERVICE_ID,
-              import.meta.env.VITE_CONFIRMATION_EMAILJS_TEMPLATE_ID,
-              {
-                name: booking.name,
-                email: booking.email,
-                room: booking.room,
-                type: booking.type,
-                checkIn: booking.checkIn,
-                checkOut: booking.checkOut,
-                guest: booking.guest,
-                bookingDate: new Date().toLocaleDateString(),
-                bookingId: booking.id,
-              },
-              import.meta.env.VITE_PUBLIC_EMAILJS_USER_ID
-            )
-            .then((result) => {
-              console.log(result.text);
-            });
-        }
       }
     } catch (error) {
       console.log('🚀 ~ file: Room.tsx:129 ~ handleCheckout ~ error:', error);
