@@ -202,3 +202,74 @@ export const updatePage = async (id: string, data: any) => {
 
   return true;
 };
+
+export const getBookings = async () => {
+  const bookings: any[] = [];
+  const fetchedRooms = await getDocs(collection(db, 'rooms'));
+
+  fetchedRooms.docs.map((doc) => {
+    const room = doc.data();
+    room.bookings.map((booking: any) => {
+      bookings.push({
+        ...booking,
+        room: room.titleEN,
+        roomId: doc.id,
+      });
+    });
+  });
+
+  return bookings;
+};
+
+export const getBooking = async (id: string) => {
+  const fetchedRooms = await getDocs(collection(db, 'rooms'));
+  let booking: any = null;
+
+  fetchedRooms.docs.map((doc) => {
+    const room = doc.data();
+    room.bookings.map((item: any) => {
+      if (item.id === id) {
+        booking = {
+          ...item,
+          room: room.titleEN,
+          roomId: doc.id,
+        };
+      }
+    });
+  });
+
+  return booking;
+};
+
+export const updateBooking = async (id: string, data: any) => {
+  const fetchedRooms = await getDocs(collection(db, 'rooms'));
+
+  fetchedRooms.docs.map((docu) => {
+    const room = docu.data();
+    room.bookings.map((item: any) => {
+      if (item.id === id) {
+        item = data;
+        updateDoc(doc(db, 'rooms', docu.id), room);
+      }
+    });
+  });
+
+  return true;
+};
+
+export const deleteBooking = async (id: string) => {
+  const fetchedRooms = await getDocs(collection(db, 'rooms'));
+
+  fetchedRooms.docs.map((docu) => {
+    const room = docu.data();
+    room.bookings.map((item: any) => {
+      if (item.id === id) {
+        const index = room.bookings.indexOf(item);
+        room.bookings.splice(index, 1);
+        updateDoc(doc(db, 'rooms', docu.id), room);
+      }
+    });
+  });
+
+  return true;
+};

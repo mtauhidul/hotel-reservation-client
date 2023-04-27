@@ -1,5 +1,6 @@
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import AddHomeIcon from '@mui/icons-material/AddHome';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import BedIcon from '@mui/icons-material/Bed';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -20,12 +21,13 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getMenus, getPages, getRooms, logout } from '../services';
+import { getBookings, getMenus, getPages, getRooms, logout } from '../services';
 import AdminModal from './AdminModal';
 import AdminTable from './AdminTable';
 import MenuModal from './MenuModal';
 import MenuTable from './MenuTable';
 import PageTable from './PageTable';
+import ReservationTable from './ReservationTable';
 
 const drawerWidth = 240;
 
@@ -42,6 +44,7 @@ export default function Admin(props: Props) {
     'Hotel Rooms Management',
     'Web Pages Management',
     'Restaurant Menus Management',
+    'Reservation Management',
   ];
   const handlePageChange = (page: number) => {
     setPageState(page);
@@ -63,7 +66,7 @@ export default function Admin(props: Props) {
       <Toolbar />
       <Divider />
       <List>
-        {['Rooms', 'Pages', 'Menus'].map((text, index) => (
+        {['Rooms', 'Pages', 'Menus', 'Reservations'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton
               onClick={() => {
@@ -73,6 +76,7 @@ export default function Admin(props: Props) {
                 {index === 0 && <BedIcon />}
                 {index === 1 && <WebIcon />}
                 {index === 2 && <RestaurantIcon />}
+                {index === 3 && <AssignmentTurnedInIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -123,6 +127,12 @@ export default function Admin(props: Props) {
   const handlePageOpen = () => setPageOpen(true);
   const handlePageClose = () => setPageOpen(false);
 
+  // Reservations
+  const [reservationData, setReservationData] = useState<any[]>([]);
+  const [reservationOpen, setReservationOpen] = useState(false);
+  const handleReservationOpen = () => setReservationOpen(true);
+  const handleReservationClose = () => setReservationOpen(false);
+
   const getAllData = async () => {
     const response = await getRooms();
     setData(response);
@@ -138,10 +148,18 @@ export default function Admin(props: Props) {
     setPageData(response);
   };
 
+  const getAllReservations = async () => {
+    const response = await getBookings();
+    setReservationData(response);
+  };
+
+  console.log('Reservation Data: ', reservationData);
+
   useEffect(() => {
     getAllData();
     getAllMenus();
     getAllPages();
+    getAllReservations();
   }, []);
 
   const perPage = 10;
@@ -219,6 +237,13 @@ export default function Admin(props: Props) {
         )}
         {pageState === 2 && (
           <MenuTable data={menuData} perPage={perPage} getData={getAllMenus} />
+        )}
+        {pageState === 3 && (
+          <ReservationTable
+            data={reservationData}
+            perPage={perPage}
+            getData={getAllReservations}
+          />
         )}
         <AdminModal
           open={open}
