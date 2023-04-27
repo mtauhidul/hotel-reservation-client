@@ -1,4 +1,3 @@
-import emailjs from 'emailjs-com';
 import {
   addDoc,
   collection,
@@ -272,33 +271,6 @@ export const deleteBooking = async (id: string) => {
       }
     });
   });
-
-  return true;
-};
-
-export const bookingConfirmation = async (id: string) => {
-  const booking = await getBooking(id);
-
-  emailjs
-    .send(
-      import.meta.env.VITE_PUBLIC_EMAILJS_SERVICE_ID,
-      import.meta.env.VITE_CONFIRMATION_EMAILJS_TEMPLATE_ID,
-      {
-        name: booking.name,
-        email: booking.email,
-        room: booking.room,
-        type: booking.type,
-        checkIn: booking.checkIn,
-        checkOut: booking.checkOut,
-        guest: booking.guest,
-        bookingDate: new Date().toLocaleDateString(),
-        bookingId: booking.id,
-      },
-      import.meta.env.VITE_PUBLIC_EMAILJS_USER_ID
-    )
-    .then((result) => {
-      console.log(result.text);
-    });
 
   return true;
 };

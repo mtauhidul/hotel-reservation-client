@@ -1,25 +1,13 @@
 import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { bookingConfirmation } from '../../services/index';
+import { useNavigate } from 'react-router-dom';
 
 const Thanks = () => {
   const navigate = useNavigate();
-  const { id }: any = useParams();
-
-  const confirm = async () => {
-    const response: any = await bookingConfirmation(id);
-    if (response.status === 200) {
-      navigate('/rooms');
-    } else {
-      setTimeout(() => {
-        navigate('/rooms');
-      }, 2000);
-    }
-  };
-
   useEffect(() => {
     sessionStorage.clear();
-    confirm();
+    setTimeout(() => {
+      navigate('/');
+    }, 5000);
   }, []);
   return (
     <div
