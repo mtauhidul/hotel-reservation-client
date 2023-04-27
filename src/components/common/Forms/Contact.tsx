@@ -1,8 +1,8 @@
 import emailjs from 'emailjs-com';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import SuccessMessage from '../SuccessMessage';
 import TextArea from '../inputs/TextArea';
 import TextInput from '../inputs/TextInput';
 
@@ -21,31 +21,33 @@ const Contact = () => {
   });
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    const toastId = toast.loading('Sending message...');
     emailjs
-      .send('service_b93cgno', 'template_gipskw5', data, 'b-km39L4E6WE97rjV')
-      .then(
-        (result) => {
-          console.log(result.text);
+      .send(
+        import.meta.env.VITE_PUBLIC_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_PUBLIC_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: data.name,
+          from_email: data.email,
+          from_phone: data.phone,
+          message: data.message,
         },
-        (error) => {
-          console.log(error.text);
-        }
-      );
-    setSuccess(true);
-    reset();
-
-    setTimeout(() => {
-      setSuccess(false);
-    }, 3000);
-
-    // setFile([]);
-    // setVarilization(false);
+        import.meta.env.VITE_PUBLIC_EMAILJS_USER_ID
+      )
+      .then((result) => {
+        toast.dismiss(toastId);
+        toast.success('Message sent successfully!');
+        setSuccess(true);
+        reset();
+      })
+      .catch((error) => {
+        toast.dismiss(toastId);
+        toast.error('Message not sent!');
+      });
   };
 
   return (
     <section>
-      {success && <SuccessMessage message='Your email send successfully' />}
       <div className='relative bg-tint h-96'>
         <img
           src='/Capture2.png'
@@ -101,7 +103,7 @@ const Contact = () => {
 
               <div className='col-span-2 md:col-span-1'>
                 <TextInput
-                  name='telephone'
+                  name='phone'
                   type='number'
                   label={t('phoneLabel')}
                   placeholder={t('phonePlaceholder')}

@@ -47,6 +47,8 @@ interface TableData {
   room: string;
   roomId: string;
   type: string;
+  name: string;
+  email: string;
 }
 
 interface TableProps {
@@ -131,8 +133,9 @@ const CustomTableRow = ({ key, row, getData }: TableProps) => {
           </Tooltip>
         </Box>
       </CustomTableCell>
-      <CustomTableCell>#{row.id}</CustomTableCell>
-      <CustomTableCell>{row.roomId}</CustomTableCell>
+      <CustomTableCell>{row.name}</CustomTableCell>
+      <CustomTableCell>{row.email}</CustomTableCell>
+      <CustomTableCell>{row.room}</CustomTableCell>
       <CustomTableCell>{row.checkIn}</CustomTableCell>
       <CustomTableCell>{row.checkOut}</CustomTableCell>
       <CustomTableCell>{row.guests}</CustomTableCell>
@@ -216,7 +219,8 @@ export default function ReservationTable({ data, perPage, getData }: any) {
             }}>
             <TableRow>
               <CustomTableHeaderCell>Actions</CustomTableHeaderCell>
-              <CustomTableHeaderCell>Reservation Id</CustomTableHeaderCell>
+              <CustomTableHeaderCell>Name</CustomTableHeaderCell>
+              <CustomTableHeaderCell>Email</CustomTableHeaderCell>
               <CustomTableHeaderCell>Room Id</CustomTableHeaderCell>
               <CustomTableHeaderCell>Check In</CustomTableHeaderCell>
               <CustomTableHeaderCell>Check Out</CustomTableHeaderCell>

@@ -24,6 +24,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { loadStripe } from '@stripe/stripe-js';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import useSWR from 'swr';
@@ -97,13 +98,11 @@ const Room = () => {
         sessionId: checkoutSession.id,
       });
 
-      if (result?.error) alert(result?.error.message);
-
-      // if (resData?.url) {
-      //   window.location.assign(resData.url);
-      // }
-
-      setLoading(false);
+      if (result?.error?.message) {
+        toast.error(result.error.message);
+      } else {
+        toast.success('Reservation successful');
+      }
     } catch (error) {
       console.log('🚀 ~ file: Room.tsx:129 ~ handleCheckout ~ error:', error);
       setLoading(false);
