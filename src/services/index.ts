@@ -248,7 +248,8 @@ export const updateBooking = async (id: string, data: any) => {
     const room = docu.data();
     room.bookings.map((item: any) => {
       if (item.id === id) {
-        item = data;
+        const index = room.bookings.indexOf(item);
+        room.bookings[index] = data;
         updateDoc(doc(db, 'rooms', docu.id), room);
       }
     });

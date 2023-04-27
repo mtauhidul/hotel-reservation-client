@@ -16,6 +16,7 @@ const ReservationEditForm = ({ data, getData }: any) => {
         checkIn,
         checkOut,
         guests,
+        id: data.id,
       });
       toast.success('Reservation updated!', { id: toastId });
       getData();
@@ -73,9 +74,7 @@ const ReservationEditForm = ({ data, getData }: any) => {
             />
             <br />
             <Button
-              onClick={() => {
-                console.log(data);
-              }}
+              onClick={handleUpdate}
               variant='contained'
               component='label'>
               Submit
