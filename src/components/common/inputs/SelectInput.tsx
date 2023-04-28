@@ -1,8 +1,8 @@
-import * as React from "react";
-import FormControl from "@mui/material/FormControl";
-import Typography from "@mui/material/Typography";
-import Select from "@mui/material/Select";
-import { Controller } from "react-hook-form";
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import { Controller } from 'react-hook-form';
 
 interface SelectInputProps {
   name: string;
@@ -20,8 +20,8 @@ interface SelectInputProps {
 }
 
 const SelectInput = ({
-  label = "",
-  name = "",
+  label = '',
+  name = '',
   optional = false,
   onChange,
   register,
@@ -33,23 +33,21 @@ const SelectInput = ({
   return (
     <FormControl
       sx={{
-        width: "100%",
-        border: "none",
-      }}
-    >
+        width: '100%',
+        border: 'none',
+      }}>
       <Typography
-        align="left"
-        variant="subtitle1"
+        align='left'
+        variant='subtitle1'
         gutterBottom
-        component="label"
+        component='label'
         htmlFor={name}
         sx={{
-          fontWeight: "400",
-          fontSize: "14px",
-          lineHeight: "22px",
-          color: errors[name] ? "var(--error)" : "var(--brand-color)",
-        }}
-      >
+          fontWeight: '400',
+          fontSize: '14px',
+          lineHeight: '22px',
+          color: errors[name] ? 'var(--error)' : 'var(--brand-color)',
+        }}>
         {errors[name]?.message ? errors[name]?.message : label}
       </Typography>
 
@@ -66,9 +64,8 @@ const SelectInput = ({
           <Select
             {...fieldRest}
             sx={{
-              border: "none",
-            }}
-          >
+              border: 'none',
+            }}>
             {props.children}
           </Select>
         )}
