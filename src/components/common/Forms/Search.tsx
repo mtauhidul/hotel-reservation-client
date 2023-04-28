@@ -10,8 +10,10 @@ const Search = () => {
   const [searchParams] = useSearchParams();
   const { t } = useTranslation();
 
-  const checkInDate = searchParams.get('checkIn');
-  const checkOutDate = searchParams.get('checkOut');
+  const checkInDate =
+    searchParams.get('checkIn') || sessionStorage.getItem('checkInDate');
+  const checkOutDate =
+    searchParams.get('checkOut') || sessionStorage.getItem('checkOutDate');
   const guests = searchParams.get('guests');
 
   const {
@@ -33,6 +35,9 @@ const Search = () => {
     navigate(
       `/rooms?checkIn=${data.checkIn}&checkOut=${data.checkOut}&guests=${data.guests}`
     );
+
+    sessionStorage.setItem('checkInDate', data.checkIn);
+    sessionStorage.setItem('checkOutDate', data.checkOut);
   };
 
   return (
